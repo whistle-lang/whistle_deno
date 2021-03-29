@@ -1,7 +1,8 @@
 import Denomander from "https://deno.land/x/denomander/mod.ts";
-import { Whistle } from "./whistle.ts"
+import { Whistle } from "./mod.ts"
 
-const program:any = new Denomander({
+
+const program: any = new Denomander({
     app_name: "Whistle",
     app_description: "A Deno CLI for the Whistle Programming Language",
     app_version: "1.0.1",
