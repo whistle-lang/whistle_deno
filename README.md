@@ -5,7 +5,8 @@
 ### Installing
 
 ```
-deno install -n whistle https://deno.land/x/whistle@1.0.1/cli.ts
+
+deno install -A -n whistle https://deno.land/x/whistle/cli.ts
 
 ```
 
