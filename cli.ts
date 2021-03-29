@@ -11,6 +11,7 @@ const program: any = new Denomander({
 
 program
     .command("compile [file]")
+    .option("-o --output", "create output file")
     .action(async ({ file }: { file: string }) => {
         let text: any;
         if (file.includes(".whi")) {
@@ -19,7 +20,11 @@ program
             text = Deno.readTextFile(`${file}.whi`)
         }
         text.then(async (response: string) => {
-            console.log(await new Whistle(response).compile())
+            let output: any = await new Whistle(response).compile()
+            console.log(output)
+            if (program.output) {
+                await Deno.writeFile(program.output, output)
+            }
         });
     });
 
