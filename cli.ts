@@ -2,7 +2,7 @@ import Denomander from "https://deno.land/x/denomander/mod.ts";
 import { Whistle } from "./mod.ts"
 
 
-const program: any = new Denomander({
+const program: Denomander = new Denomander({
     app_name: "Whistle",
     app_description: "A Deno CLI for the Whistle Programming Language",
     app_version: "1.0.1",
@@ -27,6 +27,20 @@ program
             }
         });
     });
+
+program
+    .command("build [dir]")
+    .action(async ({ dir }: { dir: string }) => {
+        for await (const dirEntry of Deno.readDir(dir)) {
+            if (dirEntry.name.includes(".whi")) {
+                Deno.readTextFile(`${dir}/${dirEntry.name}`)
+                    .then(async (response: string) => {
+                        let output: any = await new Whistle(response).compile()
+                        await Deno.writeFile(`${dir}/${dirEntry.name.replace(".whi",".wasm")}`, output)
+                    });
+            }
+        }
+    })
 
 program
     .command("tokenize [file]")
