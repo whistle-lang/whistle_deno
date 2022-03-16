@@ -2,8 +2,7 @@ import init, {
     lex,
     parse,
     compile,
-    source
-} from './pkg/wasm.js';
+} from 'https://unpkg.com/whistle_web@0.1.0/whistle_web.js';
 
 export class Whistle {
     private code: string;
@@ -12,16 +11,16 @@ export class Whistle {
     }
 
     public async tokenize() {
-        await init(source)
+        await init()
         return lex(this.code)
     }
     public async parse() {
-        await init(source);
+        await init();
         return parse(this.code)
     }
 
     public async compile() {
-        await init(source)
+        await init()
         let bits:any = compile(this.code)
         var n:any = bits.lastIndexOf(",");
         bits = bits.slice(0, n) + bits.slice(n).replace(",", "");
