@@ -2,7 +2,7 @@ import init, {
     lex,
     parse,
     compile,
-} from 'https://unpkg.com/whistle_web@0.1.0/whistle_web.js';
+} from 'https://unpkg.com/whistle_web@0.1.1/whistle_web.js';
 
 export class Whistle {
     private code: string;
