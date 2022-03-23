@@ -20,22 +20,13 @@ whistle -h
 
 ## Module Usage Example
 
-```
+```ts
+import { Whistle, load } from "https://deno.land/x/whistle@1.0.4/mod.ts";
 
-import { Whistle } from "https://deno.land/x/whistle@1.0.1/mod.ts";
+const bits =  await new Whistle("export fun add(a: i32, b: i32): i32 { return a + b }").compile();
 
-(async () => {
-    let whistle = await new Whistle("export fun add(a: i32, b: i32): i32 { return a + b }")
+const { add  } = await load(bits);
 
-    let bits = await whistle.compile()
-
-    WebAssembly.compile(bits)
-        .then(module => WebAssembly.instantiate(module, {
-            imports: {
-                imported_func: arg => console.log(arg)
-            }
-        }))
-        .then(instance => console.log(instance.exports.add(2, 7)));
-})()
+console.log(add(40, 2));
 
 ```

@@ -1,4 +1,4 @@
-import Denomander from "https://deno.land/x/denomander/mod.ts";
+import Denomander from "https://deno.land/x/denomander@0.9.1/mod.ts";
 import { Whistle } from "./mod.ts"
 
 
