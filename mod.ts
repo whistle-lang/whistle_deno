@@ -1,2 +1,2 @@
-export { Whistle } from "./src/whistle.ts";
-export { load, WhistleHelper } from "./src/helper/mod.ts";
+export { Whistle } from "./lib/whistle.ts";
+export { load, WhistleHelper } from "./lib/helper/mod.ts";
