@@ -1,15 +1,37 @@
 import * as wasm from "./wasm.js";
 
-await wasm.default(wasm.source);
+const notLoadedError = new Error(
+  "The whistle_deno wasm module needs to be loaded before using",
+);
+let loaded = false;
 
-function lex(source: string): string {
+export async function load(): Promise<void> {
+  if (!loaded) {
+    await wasm.default(wasm.source);
+    loaded = true;
+  }
+}
+
+export function lex(source: string): string {
+  if (!loaded) {
+    throw notLoadedError;
+  }
+
   return wasm.lex(source);
 }
 
-function parse(source: string): string {
+export function parse(source: string): string {
+  if (!loaded) {
+    throw notLoadedError;
+  }
+
   return wasm.parse(source);
 }
 
-function compile(source: string): Uint8Array {
+export function compile(source: string): Uint8Array {
+  if (!loaded) {
+    throw notLoadedError;
+  }
+
   return wasm.compile(source) as Uint8Array;
 }
