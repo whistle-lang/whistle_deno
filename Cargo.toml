@@ -1,15 +1,15 @@
 [package]
-name = "whistle_web"
+name = "whistle_deno"
 version = "0.1.0"
 authors = ["the Whistle authors"]
-edition = "2018"
+edition = "2021"
 
 [lib]
+path = "./lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2.68"
-wee_alloc = { version = "0.4.5", optional = true }
+wasm-bindgen = "0.2.79"
 whistle_lexer = { git = "https://github.com/whistle-lang/whistle" }
 whistle_parser = { git = "https://github.com/whistle-lang/whistle" }
 whistle_common = { git = "https://github.com/whistle-lang/whistle" }
@@ -21,6 +21,3 @@ lto = true
 
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = ["-Oz", "--enable-mutable-globals"]
-
-[features]
-default = ["wee_alloc"]
