@@ -1,5 +1,4 @@
 import { encode } from "https://deno.land/std@0.132.0/encoding/base64.ts";
-import { compress } from "https://deno.land/x/lz4@v0.1.2/mod.ts";
 import { minify } from "https://jspm.dev/terser@5.12.1";
 
 const name = "whistle_deno";
@@ -17,18 +16,11 @@ export async function build() {
 
   const wasm = await Deno.readFile(`pkg/${name}_bg.wasm`);
   console.log(`read wasm (size: ${wasm.length} bytes)`);
-  const compressed = compress(wasm);
-  console.log(
-    `compressed wasm using lz4 (reduction: ${
-      wasm.length -
-      compressed.length
-    } bytes, size: ${compressed.length} bytes)`,
-  );
-  const encoded = encode(compressed);
+  const encoded = encode(wasm);
   console.log(
     `encoded wasm using base64 (increase: ${
       encoded.length -
-      compressed.length
+      wasm.length
     } bytes, size: ${encoded.length} bytes)`,
   );
 
@@ -37,8 +29,7 @@ export async function build() {
 
   const source =
     `import { decode } from "https://deno.land/std@0.132.0/encoding/base64.ts";
-import { decompress } from "https://deno.land/x/lz4@v0.1.2/mod.ts";
-export const source = decompress(decode("${encoded}"));
+export const source = decode("${encoded}");
 ${init}`;
   console.log(`inlined js and wasm (size: ${source.length} bytes)`);
 
